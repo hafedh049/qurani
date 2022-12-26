@@ -32,9 +32,11 @@ class SaveVerse extends StatelessWidget {
               "save_date": Timestamp.now(),
             },
           );
+          show("verse saved");
         } else {
           userSavedVerses.removeWhere((Map<String, dynamic> element) =>
               element["verse_number"] == verse);
+          show("verse unsaved");
         }
 
         await FirebaseFirestore.instance

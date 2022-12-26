@@ -15,8 +15,8 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
+  TextEditingController email = TextEditingController(text: "");
+  TextEditingController password = TextEditingController(text: "");
 
   bool isVisible = false;
 
@@ -48,8 +48,15 @@ class _SignInState extends State<SignIn> {
               const SizedBox(height: 20),
               TextField(
                 style: TextStyle(color: white),
+                controller: email,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide(
+                      color: purple,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(
                       color: purple,
@@ -68,10 +75,17 @@ class _SignInState extends State<SignIn> {
                 builder: (BuildContext context,
                     void Function(void Function()) setS) {
                   return TextField(
+                    controller: password,
                     style: TextStyle(color: white),
                     obscureText: !isVisible,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(
+                          color: purple,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
                         borderSide: BorderSide(
                           color: purple,
@@ -89,7 +103,7 @@ class _SignInState extends State<SignIn> {
                         hoverColor: transparent,
                         splashColor: transparent,
                         icon: Icon(
-                          isVisible ? Icons.visibility_off : Icons.visibility,
+                          isVisible ? Icons.visibility : Icons.visibility_off,
                           color: purple,
                         ),
                         onPressed: () {
@@ -108,19 +122,21 @@ class _SignInState extends State<SignIn> {
                 splashColor: transparent,
                 onTap: () async {
                   try {
-                    if (!email.text.trim().contains(RegExp(r"^ *$")) &&
-                        !password.text.trim().contains(RegExp(r"^ *$"))) {
-                      await FirebaseAuth.instance.signInWithEmailAndPassword(
-                        email: email.text.trim(),
-                        password: password.text.trim(),
-                      );
-                      // ignore: use_build_context_synchronously
-                      await Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const Welcome(),
-                        ),
-                      );
-                    }
+                    await FirebaseAuth.instance
+                        .signInWithEmailAndPassword(
+                      email: email.text.trim(),
+                      password: password.text.trim(),
+                    )
+                        .then(
+                      (value) async {
+                        show("user signed-in");
+                        await Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => const Welcome(),
+                          ),
+                        );
+                      },
+                    );
                   } on String catch (_ /*,e*/) {
                     debugPrint(_);
                   }
@@ -177,7 +193,7 @@ class _SignInState extends State<SignIn> {
         ),
         child: InkWell(
           onTap: () {
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (context) => const SignUp(),

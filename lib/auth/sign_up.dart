@@ -15,10 +15,10 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
-  TextEditingController englishUsername = TextEditingController();
-  TextEditingController username = TextEditingController();
+  TextEditingController email = TextEditingController(text: "");
+  TextEditingController password = TextEditingController(text: "");
+  TextEditingController englishUsername = TextEditingController(text: "");
+  TextEditingController username = TextEditingController(text: "");
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -62,6 +62,12 @@ class _SignUpState extends State<SignUp> {
                     return null;
                   },
                   decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide(
+                        color: purple,
+                      ),
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
                       borderSide: BorderSide(
@@ -98,6 +104,12 @@ class _SignUpState extends State<SignUp> {
                         color: purple,
                       ),
                     ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide(
+                        color: purple,
+                      ),
+                    ),
                     hintText: 'Username',
                     hintStyle: TextStyle(color: whiteShade),
                     prefixIcon: Icon(
@@ -121,6 +133,12 @@ class _SignUpState extends State<SignUp> {
                   controller: username,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide(
+                        color: purple,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
                       borderSide: BorderSide(
                         color: purple,
@@ -155,6 +173,12 @@ class _SignUpState extends State<SignUp> {
                       obscureText: !isVisible,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide(
+                            color: purple,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                           borderSide: BorderSide(
                             color: purple,
@@ -216,19 +240,20 @@ class _SignUpState extends State<SignUp> {
                                 "english_username": englishUsername.text.trim(),
                                 "creation_date": Timestamp.now(),
                                 "saved_verses": [],
-                                "greetings": false,
+                                "state": false,
                               },
                             );
+                            show("user created successfully");
                           },
+                        ).then(
+                          (void value) => Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Welcome(),
+                            ),
+                          ),
                         );
                       }
-                      // ignore: use_build_context_synchronously
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Welcome(),
-                        ),
-                      );
                     } on String catch (_ /*,e*/) {
                       debugPrint(_);
                     }
@@ -268,7 +293,7 @@ class _SignUpState extends State<SignUp> {
         ),
         child: InkWell(
           onTap: () {
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (context) => const SignIn(),

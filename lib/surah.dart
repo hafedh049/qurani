@@ -65,7 +65,7 @@ class _SurahState extends State<Surah> {
                 borderRadius: BorderRadius.circular(15),
                 gradient: LinearGradient(
                   colors: <Color>[white, purple],
-                  begin: AlignmentDirectional.topStart,
+                  begin: AlignmentDirectional.bottomEnd,
                   end: AlignmentDirectional.bottomEnd,
                   tileMode: TileMode.clamp,
                 ),
@@ -78,15 +78,16 @@ class _SurahState extends State<Surah> {
                     text: quran.getSurahName(widget.surah),
                     color: white,
                     fontSize: 35,
+                    fontWeight: FontWeight.bold,
                   ),
                   CustomizedText(
-                    text: quran.getSurahNameEnglish(widget.surah),
+                    text: '" ${quran.getSurahNameEnglish(widget.surah)} "',
                     color: white,
                     fontSize: 18,
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width * .6,
-                    height: .2,
+                    height: .5,
                     decoration: BoxDecoration(
                       color: white,
                       borderRadius: BorderRadius.circular(15),
@@ -101,7 +102,7 @@ class _SurahState extends State<Surah> {
                   CustomizedText(
                     text: quran.basmala,
                     color: white,
-                    fontSize: 18,
+                    fontSize: 38,
                     fontFamily: "Calligraphy",
                   ),
                 ],
@@ -143,8 +144,12 @@ class _SurahState extends State<Surah> {
                               const SizedBox(width: 20),
                               CustomizedInkwell(
                                 func: () {
-                                  recitate(quran.getAudioURLByVerse(
-                                      widget.surah, index + 1));
+                                  recitate(
+                                    quran.getAudioURLByVerse(
+                                      widget.surah,
+                                      index + 1,
+                                    ),
+                                  );
                                 },
                                 icon: FontAwesomeIcons.play,
                                 color: purple,
@@ -209,7 +214,7 @@ class _SurahState extends State<Surah> {
                 addRepaintBoundaries: true,
                 physics: const BouncingScrollPhysics(),
               ),
-            )
+            ),
           ],
         ),
       ),

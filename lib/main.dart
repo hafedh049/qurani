@@ -27,7 +27,7 @@ void main() async {
 class Main extends StatelessWidget {
   Main({super.key});
   final Future<FirebaseApp> firebase = Firebase.initializeApp(
-    name: "Qurani",
+    //name: "Qurani",
     options: const FirebaseOptions(
       apiKey: "AIzaSyBLRelZqUkvg-2hMPqcFkbdQluQJP_XJvw",
       appId: "1:609944131433:android:2b3da12228d827fefb8ff8",
@@ -61,7 +61,7 @@ class Main extends StatelessWidget {
                           AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>>
                               sn) {
                         if (sn.connectionState == ConnectionState.active) {
-                          if (sn.data!.get("state")) {
+                          if (!sn.data!.get("state")) {
                             return const Greetings();
                           } else {
                             return const Welcome();

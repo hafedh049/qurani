@@ -58,13 +58,19 @@ class _PasswordRecoveryState extends State<PasswordRecovery> {
                   if (value!.isEmpty) {
                     return "email is mandatory";
                   } else if (!value.toLowerCase().contains(
-                      RegExp(r"^[a-z]\w+\@\[a-z][\w\.]+\.[a-z]{2,3}$"))) {
+                      RegExp(r"[a-z]\w+\@[a-z][\w\.]+\.[a-z]{2,3}"))) {
                     return "email should be in this form : aaa@bbb.ccc";
                   }
                   return null;
                 },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide(
+                      color: purple,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(
                       color: purple,

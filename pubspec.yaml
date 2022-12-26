@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  adhan: ^1.1.16
+  #adhan: ^1.1.16
   font_awesome_flutter: ^10.3.0
   #flutter_tts: ^3.6.2
   lottie: ^2.1.0
@@ -22,6 +22,7 @@ dependencies:
   firebase_core: ^2.4.0
   firebase_auth: ^4.2.3
   fluttertoast: ^8.1.2
+  flutter_launcher_icons: ^0.11.0
   #animate_icons: ^2.0.0
 
 dev_dependencies:
@@ -29,6 +30,11 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^2.0.0
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: false
+  image_path: "assets/icon.png"
 
 flutter:
 

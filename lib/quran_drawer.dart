@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:korani/auth/sign_in.dart';
@@ -15,8 +16,10 @@ class QuranDrawer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            const SizedBox(height: 40),
             Container(
-              height: 200,
+              width: 300.0,
+              height: 150,
               decoration: BoxDecoration(
                 color: purple,
                 borderRadius: const BorderRadius.only(
@@ -25,11 +28,44 @@ class QuranDrawer extends StatelessWidget {
                 ),
               ),
               child: Center(
-                child: CustomizedText(
-                  text: "مرحبا",
-                  color: white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 20),
+                    CustomizedText(
+                      text: "مرحبا",
+                      color: white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    const SizedBox(height: 10),
+                    StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                      stream: FirebaseFirestore.instance
+                          .collection("users")
+                          .doc(FirebaseAuth.instance.currentUser!.uid)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData ||
+                            snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                          return CustomizedText(
+                            text: snapshot.hasData
+                                ? snapshot.data!.get("arabic_username")
+                                : "",
+                            color: white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          );
+                        } else {
+                          return CustomizedText(
+                            text: snapshot.error.toString(),
+                            color: white,
+                            fontSize: 20,
+                          );
+                        }
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -40,14 +76,16 @@ class QuranDrawer extends StatelessWidget {
               hoverColor: transparent,
               splashColor: transparent,
               onTap: () async {
-                await FirebaseAuth.instance.signOut();
-                // ignore: use_build_context_synchronously
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SignIn(),
-                    ),
-                    (route) => false);
+                show("user signed-out");
+                await FirebaseAuth.instance.signOut().then(
+                      (value) => Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SignIn(),
+                        ),
+                        (route) => false,
+                      ),
+                    );
               },
               child: CustomizedText(text: "Sign-Out", color: white),
             ),
