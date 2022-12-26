@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:korani/constants.dart';
+import 'package:korani/save_verse.dart';
 import 'package:quran/quran.dart' as quran;
 
 class Surah extends StatefulWidget {
@@ -14,6 +17,16 @@ class Surah extends StatefulWidget {
 }
 
 class _SurahState extends State<Surah> {
+  List<Map<String, dynamic>> userSavedVerses = <Map<String, dynamic>>[];
+  Future<void> loadUserSavedVerses() async {
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((DocumentSnapshot<Map<String, dynamic>> value) =>
+            userSavedVerses = value.get("saved_verses"));
+  }
+
   @override
   void dispose() {
     recitator.stop();
@@ -31,6 +44,7 @@ class _SurahState extends State<Surah> {
             Navigator.pop(context);
           },
           icon: FontAwesomeIcons.chevronLeft,
+          color: purple,
         ),
         title: CustomizedText(
           color: white,
@@ -80,7 +94,7 @@ class _SurahState extends State<Surah> {
                   ),
                   CustomizedText(
                     text:
-                        "${quran.getPlaceOfRevelation(widget.surah).toUpperCase()} - ${quran.getVerseCount(widget.surah)} surahS",
+                        "${quran.getPlaceOfRevelation(widget.surah).toUpperCase()} - ${quran.getVerseCount(widget.surah)} VERSES",
                     color: white,
                     fontSize: 18,
                   ),
@@ -136,10 +150,10 @@ class _SurahState extends State<Surah> {
                                 color: purple,
                               ),
                               const SizedBox(width: 20),
-                              CustomizedInkwell(
-                                func: () {},
-                                icon: FontAwesomeIcons.bookmark,
-                                color: purple,
+                              SaveVerse(
+                                verse: index + 1,
+                                surah: widget.surah,
+                                userSavedVerses: userSavedVerses,
                               ),
                             ],
                           ),

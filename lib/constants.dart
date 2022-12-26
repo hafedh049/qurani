@@ -1,5 +1,6 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 Color bgColor = const Color.fromARGB(255, 0, 24, 44);
 Color white = Colors.white;
@@ -10,6 +11,14 @@ Color transparent = Colors.transparent;
 AssetsAudioPlayer recitator = AssetsAudioPlayer.newPlayer();
 Future<void> recitate(String recitation) async {
   recitator.open(Audio.network(recitation));
+}
+
+void show(String text) {
+  Fluttertoast.showToast(
+    msg: text,
+    fontSize: 16,
+    toastLength: Toast.LENGTH_LONG,
+  );
 }
 
 @immutable
@@ -43,6 +52,7 @@ class CustomizedIconButton extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class CustomizedInkwell extends StatelessWidget {
   CustomizedInkwell({
     super.key,
