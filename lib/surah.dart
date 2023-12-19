@@ -1,16 +1,16 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:korani/constants.dart';
+import 'package:korani/utils/globals.dart';
 import 'package:korani/save_verse.dart';
 import 'package:quran/quran.dart' as quran;
 
+import 'utils/callbacks.dart';
+import 'utils/helpers/custom_icon_button.dart';
+import 'utils/helpers/custom_inkwell.dart';
+import 'utils/helpers/custom_text.dart';
+
 class Surah extends StatefulWidget {
-  const Surah({
-    super.key,
-    required this.surah,
-  });
+  const Surah({super.key, required this.surah});
   final int surah;
   @override
   State<Surah> createState() => _SurahState();
@@ -18,14 +18,6 @@ class Surah extends StatefulWidget {
 
 class _SurahState extends State<Surah> {
   List<Map<String, dynamic>> userSavedVerses = <Map<String, dynamic>>[];
-  Future<void> loadUserSavedVerses() async {
-    await FirebaseFirestore.instance
-        .collection("users")
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .get()
-        .then((DocumentSnapshot<Map<String, dynamic>> value) =>
-            userSavedVerses = value.get("saved_verses"));
-  }
 
   @override
   void dispose() {
@@ -36,75 +28,33 @@ class _SurahState extends State<Surah> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bgColor,
+      backgroundColor: grey,
       appBar: AppBar(
-        backgroundColor: bgColor,
-        leading: CustomizedIconButton(
-          func: () {
-            Navigator.pop(context);
-          },
-          icon: FontAwesomeIcons.chevronLeft,
-          color: purple,
-        ),
-        title: CustomizedText(
-          color: white,
-          text: quran.getSurahName(widget.surah),
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
+        backgroundColor: grey,
+        leading: CustomizedIconButton(func: () => Navigator.pop(context), icon: FontAwesomeIcons.chevronLeft, color: purple),
+        title: CustomizedText(color: white, text: quran.getSurahName(widget.surah), fontSize: 18, fontWeight: FontWeight.bold),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             Container(
               width: MediaQuery.of(context).size.width,
               height: 300,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                gradient: LinearGradient(
-                  colors: <Color>[white, purple],
-                  begin: AlignmentDirectional.bottomEnd,
-                  end: AlignmentDirectional.bottomEnd,
-                  tileMode: TileMode.clamp,
-                ),
+                gradient: const LinearGradient(colors: <Color>[white, purple], begin: AlignmentDirectional.bottomEnd, end: AlignmentDirectional.bottomEnd, tileMode: TileMode.clamp),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  CustomizedText(
-                    text: quran.getSurahName(widget.surah),
-                    color: white,
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  CustomizedText(
-                    text: '" ${quran.getSurahNameEnglish(widget.surah)} "',
-                    color: white,
-                    fontSize: 18,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * .6,
-                    height: .5,
-                    decoration: BoxDecoration(
-                      color: white,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  CustomizedText(
-                    text:
-                        "${quran.getPlaceOfRevelation(widget.surah).toUpperCase()} - ${quran.getVerseCount(widget.surah)} VERSES",
-                    color: white,
-                    fontSize: 18,
-                  ),
-                  CustomizedText(
-                    text: quran.basmala,
-                    color: white,
-                    fontSize: 38,
-                    fontFamily: "Calligraphy",
-                  ),
+                  CustomizedText(text: quran.getSurahName(widget.surah), color: white, fontSize: 35, fontWeight: FontWeight.bold),
+                  CustomizedText(text: '" ${quran.getSurahNameEnglish(widget.surah)} "', color: white, fontSize: 18),
+                  Container(width: MediaQuery.of(context).size.width * .6, height: .5, decoration: BoxDecoration(color: white, borderRadius: BorderRadius.circular(15))),
+                  CustomizedText(text: "${quran.getPlaceOfRevelation(widget.surah).toUpperCase()} - ${quran.getVerseCount(widget.surah)} VERSES", color: white, fontSize: 18),
+                  const CustomizedText(text: quran.basmala, color: white, fontSize: 38, fontFamily: "Calligraphy"),
                 ],
               ),
             ),
@@ -126,92 +76,34 @@ class _SurahState extends State<Surah> {
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              CircleAvatar(
-                                radius: 15,
-                                backgroundColor: purple,
-                                child: CustomizedText(
-                                  text: (index + 1).toString(),
-                                  color: white,
-                                ),
-                              ),
+                            children: <Widget>[
+                              CircleAvatar(radius: 15, backgroundColor: purple, child: CustomizedText(text: (index + 1).toString(), color: white)),
                               const Spacer(),
-                              CustomizedInkwell(
-                                func: () {},
-                                icon: FontAwesomeIcons.shareNodes,
-                                color: purple,
-                              ),
+                              CustomizedInkwell(func: () {}, icon: FontAwesomeIcons.shareNodes, color: purple),
                               const SizedBox(width: 20),
-                              CustomizedInkwell(
-                                func: () {
-                                  recitate(
-                                    quran.getAudioURLByVerse(
-                                      widget.surah,
-                                      index + 1,
-                                    ),
-                                  );
-                                },
-                                icon: FontAwesomeIcons.play,
-                                color: purple,
-                              ),
+                              CustomizedInkwell(func: () => recitate(quran.getAudioURLByVerse(widget.surah, index + 1)), icon: FontAwesomeIcons.play, color: purple),
                               const SizedBox(width: 20),
-                              SaveVerse(
-                                verse: index + 1,
-                                surah: widget.surah,
-                                userSavedVerses: userSavedVerses,
-                              ),
+                              SaveVerse(verse: index + 1, surah: widget.surah, userSavedVerses: userSavedVerses),
                             ],
                           ),
                         ),
                       ),
                       const SizedBox(height: 10),
-                      Align(
-                        alignment: AlignmentDirectional.centerEnd,
-                        child: CustomizedText(
-                          text: quran.getVerse(
-                            widget.surah,
-                            index + 1,
-                            verseEndSymbol: true,
-                          ),
-                          color: white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      Align(alignment: AlignmentDirectional.centerEnd, child: CustomizedText(text: quran.getVerse(widget.surah, index + 1, verseEndSymbol: true), color: white, fontWeight: FontWeight.bold)),
                       const SizedBox(height: 10),
-                      Align(
-                        alignment: AlignmentDirectional.centerStart,
-                        child: CustomizedText(
-                          text: quran.getVerseTranslation(
-                            widget.surah,
-                            index + 1,
-                          ),
-                          color: whiteShade,
-                        ),
-                      ),
+                      Align(alignment: AlignmentDirectional.centerStart, child: CustomizedText(text: quran.getVerseTranslation(widget.surah, index + 1), color: white)),
                       const SizedBox(height: 10),
                     ],
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) {
                   return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8.0,
-                      vertical: 16,
-                    ),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: .2,
-                      decoration: BoxDecoration(
-                        color: whiteShade.withOpacity(.8),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                    child: Container(width: MediaQuery.of(context).size.width, height: .2, decoration: BoxDecoration(color: white.withOpacity(.8), borderRadius: BorderRadius.circular(15))),
                   );
                 },
                 itemCount: quran.getVerseCount(widget.surah),
                 shrinkWrap: true,
-                addAutomaticKeepAlives: true,
-                addRepaintBoundaries: true,
                 physics: const BouncingScrollPhysics(),
               ),
             ),

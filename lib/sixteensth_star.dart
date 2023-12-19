@@ -8,8 +8,7 @@ class SixteenSideStar extends StatelessWidget {
       height: 50,
       width: 70,
       child: CustomPaint(
-        size: const Size(800,
-            800), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
+        size: const Size(800, 800),
         painter: SixteenSideStarPainter(),
       ),
     );
