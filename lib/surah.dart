@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:korani/utils/globals.dart';
-import 'package:korani/save_verse.dart';
+import 'package:korani/utils/helpers/custom_bookmark.dart';
+import 'package:korani/utils/helpers/custom_play_pause.dart';
 import 'package:quran/quran.dart' as quran;
 
-import 'utils/callbacks.dart';
 import 'utils/helpers/custom_icon_button.dart';
-import 'utils/helpers/custom_inkwell.dart';
 import 'utils/helpers/custom_text.dart';
 
 class Surah extends StatefulWidget {
@@ -18,8 +16,6 @@ class Surah extends StatefulWidget {
 }
 
 class _SurahState extends State<Surah> {
-  List<Map<String, dynamic>> userSavedVerses = <Map<String, dynamic>>[];
-
   @override
   void dispose() {
     recitator.stop();
@@ -79,8 +75,9 @@ class _SurahState extends State<Surah> {
                               Container(height: 1, width: 10, color: purple, margin: const EdgeInsets.symmetric(horizontal: 4)),
                               CircleAvatar(radius: 15, backgroundColor: purple, child: CustomizedText(text: (index + 1).toString().split('').map((String e) => arabicNumbers[e]).join(), color: white)),
                               const Spacer(),
+                              PlayPause(index: index, surah: widget.surah),
                               const SizedBox(width: 20),
-                              SaveVerse(verse: index + 1, surah: widget.surah, userSavedVerses: userSavedVerses),
+                              BookMark(verse: index + 1, surah: widget.surah),
                             ],
                           ),
                         ),

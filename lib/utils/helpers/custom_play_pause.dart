@@ -20,15 +20,15 @@ class _PlayPauseState extends State<PlayPause> {
     return AnimatedSwitcher(
       duration: 500.ms,
       child: InkWell(
-        highlightColor: transparent,
-        focusColor: transparent,
-        hoverColor: transparent,
-        splashColor: transparent,
         onTap: () async {
-          await recitate(quran.getAudioURLByVerse(widget.surah, widget.index + 1));
-          setState(() => _isPlaying = true);
+          if (!_isPlaying) {
+            await recitate(quran.getAudioURLByVerse(widget.surah, widget.index + 1));
+          } else {
+            await recitator.stop();
+          }
+          setState(() => _isPlaying = !_isPlaying);
         },
-        child: Icon(_isPlaying ? FontAwesomeIcons.stop : FontAwesomeIcons.play, size: 15, color: purple),
+        child: Icon(_isPlaying ? FontAwesomeIcons.stop : FontAwesomeIcons.play, size: 20, color: purple),
       ),
     );
   }
