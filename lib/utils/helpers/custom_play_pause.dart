@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:korani/utils/callbacks.dart';
 import 'package:korani/utils/globals.dart';
@@ -17,19 +16,19 @@ class _PlayPauseState extends State<PlayPause> {
   bool _isPlaying = false;
   @override
   Widget build(BuildContext context) {
-    return AnimatedSwitcher(
-      duration: 500.ms,
-      child: InkWell(
-        onTap: () async {
-          if (!_isPlaying) {
-            await recitate(quran.getAudioURLByVerse(widget.surah, widget.index + 1));
-          } else {
-            await recitator.stop();
-          }
-          setState(() => _isPlaying = !_isPlaying);
-        },
-        child: Icon(_isPlaying ? FontAwesomeIcons.stop : FontAwesomeIcons.play, size: 20, color: purple),
-      ),
+    return InkWell(
+      splashColor: transparent,
+      hoverColor: transparent,
+      highlightColor: transparent,
+      onTap: () async {
+        if (!_isPlaying) {
+          await recitate(quran.getAudioURLByVerse(widget.surah, widget.index + 1));
+        } else {
+          await recitator.stop();
+        }
+        setState(() => _isPlaying = !_isPlaying);
+      },
+      child: Icon(_isPlaying ? FontAwesomeIcons.stop : FontAwesomeIcons.play, size: 20, color: purple),
     );
   }
 }

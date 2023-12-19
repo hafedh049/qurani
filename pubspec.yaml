@@ -13,12 +13,10 @@ dependencies:
     sdk: flutter
 
   font_awesome_flutter: ^10.3.0
-  lottie: ^2.1.0
   quran: ^1.1.8
   assets_audio_player: ^3.0.6
   fluttertoast: ^8.1.2
   hive: ^2.2.3
-  http: ^1.1.2
   path_provider: ^2.1.1
   flutter_animate: ^4.3.0
 
