@@ -21,7 +21,20 @@ class SurahTile extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Stack(alignment: AlignmentDirectional.center, children: <Widget>[SixteenSideStar(), CustomizedText(text: number.toString(), color: white, fontWeight: FontWeight.normal, fontSize: 16)]),
+            Stack(
+              alignment: AlignmentDirectional.center,
+              children: <Widget>[
+                SixteenSideStar(),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    CustomizedText(text: number.toString(), color: white, fontWeight: FontWeight.normal, fontSize: 12),
+                    Container(width: 20, height: 1, color: purple),
+                    CustomizedText(text: number.toString().split('').map((String e) => arabicNumbers[e]).join(), color: white, fontWeight: FontWeight.normal, fontSize: 16),
+                  ],
+                ),
+              ],
+            ),
             const SizedBox(width: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

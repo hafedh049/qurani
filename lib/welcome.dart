@@ -6,7 +6,6 @@ import 'package:korani/utils/helpers/custom_icon_button.dart';
 import 'package:korani/utils/helpers/custom_text.dart';
 import 'package:quran/quran.dart' as quran;
 import 'utils/globals.dart';
-import 'quran_drawer.dart';
 import 'utils/helpers/application_title.dart';
 
 class Welcome extends StatefulWidget {
@@ -18,14 +17,11 @@ class Welcome extends StatefulWidget {
 
 class _WelcomeState extends State<Welcome> {
   int surah = Random().nextInt(114) + 1;
-  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
       backgroundColor: grey,
-      appBar: AppBar(backgroundColor: grey, leading: CustomizedIconButton(func: () => scaffoldKey.currentState!.openDrawer(), icon: FontAwesomeIcons.barsProgress), title: const AppTitle()),
-      drawer: const QuranDrawer(),
+      appBar: AppBar(backgroundColor: grey, leading: CustomizedIconButton(func: () {}, icon: FontAwesomeIcons.barsProgress), title: const AppTitle()),
       extendBody: true,
       resizeToAvoidBottomInset: true,
       body: Padding(
@@ -35,7 +31,7 @@ class _WelcomeState extends State<Welcome> {
           children: <Widget>[
             const CustomizedText(text: "Assalamualaikum", color: white, fontSize: 25, fontWeight: FontWeight.bold),
             const SizedBox(height: 10),
-            CustomizedText(text: userData!.get("name").toUpperCase(), color: white, fontSize: 35, fontWeight: FontWeight.bold),
+            CustomizedText(text: userData!.get("english_name").toUpperCase(), color: white, fontSize: 35, fontWeight: FontWeight.bold),
             const SizedBox(height: 20),
             Container(
               padding: const EdgeInsets.all(8.0),

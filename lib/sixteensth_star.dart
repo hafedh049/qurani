@@ -3,16 +3,7 @@ import 'package:flutter/material.dart';
 // ignore: use_key_in_widget_constructors
 class SixteenSideStar extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 50,
-      width: 70,
-      child: CustomPaint(
-        size: const Size(800, 800),
-        painter: SixteenSideStarPainter(),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => SizedBox(height: 60, width: 90, child: CustomPaint(painter: SixteenSideStarPainter()));
 }
 
 class SixteenSideStarPainter extends CustomPainter {
@@ -21,9 +12,10 @@ class SixteenSideStarPainter extends CustomPainter {
     Paint paint0 = Paint()
       ..color = const Color.fromARGB(255, 184, 113, 251)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2;
+      ..strokeWidth = 1;
 
     Path path0 = Path();
+
     path0.moveTo(size.width * 0.4998000, 0);
     path0.lineTo(size.width * 0.6237500, size.height * 0.1000000);
     path0.lineTo(size.width * 0.7487500, size.height * 0.1000000);
@@ -47,7 +39,5 @@ class SixteenSideStarPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
-  }
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
