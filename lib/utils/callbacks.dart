@@ -13,7 +13,7 @@ Future<bool> load() async {
     Hive.init((await getApplicationDocumentsDirectory()).path);
     userData = await Hive.openBox("userData");
     if (userData!.isEmpty) {
-      await userData!.putAll(<String, dynamic>{"first_time": true, "english_name": "User", "arabic_name": "User", "last_verse": 0, "last_surah": 0});
+      await userData!.putAll(<String, dynamic>{"first_time": true, "name": "User", "last_verse": 0, "last_surah": 0});
     }
     return true;
   } catch (e) {

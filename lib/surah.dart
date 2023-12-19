@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:korani/utils/globals.dart';
 import 'package:korani/save_verse.dart';
@@ -64,24 +65,20 @@ class _SurahState extends State<Surah> {
                 itemBuilder: (BuildContext context, int index) {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
+                    children: <Widget>[
                       Container(
                         width: MediaQuery.of(context).size.width,
                         height: 40,
-                        decoration: BoxDecoration(
-                          color: white.withOpacity(.2),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
+                        decoration: BoxDecoration(color: white.withOpacity(.2), borderRadius: BorderRadius.circular(15)),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              CircleAvatar(radius: 15, backgroundColor: purple, child: CustomizedText(text: (index + 1).toString(), color: white)),
+                              CircleAvatar(radius: 15, backgroundColor: purple, child: CustomizedText(text: (index + 1).toString(), color: white, fontSize: 12)),
+                              Container(height: 1, width: 10, color: purple, margin: const EdgeInsets.symmetric(horizontal: 4)),
+                              CircleAvatar(radius: 15, backgroundColor: purple, child: CustomizedText(text: (index + 1).toString().split('').map((String e) => arabicNumbers[e]).join(), color: white)),
                               const Spacer(),
-                              CustomizedInkwell(func: () {}, icon: FontAwesomeIcons.shareNodes, color: purple),
-                              const SizedBox(width: 20),
-                              CustomizedInkwell(func: () => recitate(quran.getAudioURLByVerse(widget.surah, index + 1)), icon: FontAwesomeIcons.play, color: purple),
                               const SizedBox(width: 20),
                               SaveVerse(verse: index + 1, surah: widget.surah, userSavedVerses: userSavedVerses),
                             ],
