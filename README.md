@@ -1,4 +1,4 @@
-<h1>Quran Companion</h1>h1>
+<h1><font color="blue">Quran Companion</font></h1>
 The Quran Companion is a user-friendly mobile application designed to provide an enriched and seamless experience for reading, studying, and exploring the Holy Quran. With a simple and intuitive interface, this app aims to facilitate access to the sacred text, fostering a deeper connection with the teachings and wisdom of the Quran.
 
 #Key Features:
