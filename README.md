@@ -13,8 +13,8 @@ Whether you're a scholar, a student, or someone seeking spiritual guidance, the 
 ## Installation
 The Quran Companion app is available for <a>iOS</a> and <a>Android</a>, providing a seamless Quranic experience on your mobile device. Simply download from the respective app stores and embark on a transformative journey with the Quran.
 
-<div>
+<span>
   <img src="assets/1.jpg">
   <img src="assets/2.jpg">
   <img src="assets/3.jpg">
-</div>
+</span>
