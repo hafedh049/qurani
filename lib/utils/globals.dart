@@ -11,4 +11,4 @@ final AssetsAudioPlayer recitator = AssetsAudioPlayer.newPlayer();
 
 Box? userData;
 
-final Map<String, String> arabicNumbers = <String, String>{"0": "٠", "1": "۱", "2": "۲", "3": "۳", "4": "٤", "5": "٥", "6": "٦", "7": "۷", "8": "۸", "9": "۹"};
+const Map<String, String> arabicNumbers = <String, String>{"0": "٠", "1": "۱", "2": "۲", "3": "۳", "4": "٤", "5": "٥", "6": "٦", "7": "۷", "8": "۸", "9": "۹"};
