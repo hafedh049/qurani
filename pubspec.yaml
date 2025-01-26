@@ -12,14 +12,23 @@ dependencies:
   flutter:
     sdk: flutter
 
-  font_awesome_flutter: ^10.3.0
-  quran: ^1.1.8
-  assets_audio_player: ^3.0.6
-  fluttertoast: ^8.1.2
+  assets_audio_player: ^3.1.1
+  flutter_animate: ^4.5.2
+  flutter_native_splash: ^2.4.4
+  fluttertoast: ^8.2.10
+  font_awesome_flutter: ^10.8.0
   hive: ^2.2.3
-  path_provider: ^2.1.1
-  flutter_animate: ^4.3.0
-  flutter_native_splash: ^2.3.8
+  path_provider: ^2.1.5
+  quran: ^1.2.4
+
+  #font_awesome_flutter: ^10.3.0
+  #quran: ^1.1.8
+  #assets_audio_player: ^3.0.6
+  #fluttertoast: ^8.1.2
+  #hive: ^2.2.3
+  #path_provider: ^2.1.1
+  #flutter_animate: ^4.3.0
+  #flutter_native_splash: ^2.3.8
 
 dev_dependencies:
   flutter_test:
